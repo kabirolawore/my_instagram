@@ -28,7 +28,7 @@ const SignUp = () => {
       try {
         const createdUserResult = await firebase
           .auth()
-          .createUserwithEmailAndPassword(emailAddress, password);
+          .createUserWithEmailAndPassword(emailAddress, password);
 
         // authentication
         // => emailAddress & password & username (displayName)
@@ -47,7 +47,7 @@ const SignUp = () => {
           dateCreated: Date.now(),
         });
 
-        navigate.push(ROUTES.DASHBOARD);
+        navigate(ROUTES.DASHBOARD);
       } catch (error) {
         setFullName('');
         setEmailAddress('');

@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import * as ROUTES from './constants/Routes';
 
 const Login = lazy(() => import('./pages/Login'));
+const SignUp = lazy(() => import('./pages/SignUp'));
 
 const App = () => {
   return (
@@ -10,6 +11,7 @@ const App = () => {
       <Suspense fallback={<p>Loading...</p>}>
         <Routes>
           <Route path={ROUTES.LOGIN} element={<Login />} />
+          <Route path={ROUTES.SIGN_UP} element={<SignUp />} />
         </Routes>
       </Suspense>
     </Router>

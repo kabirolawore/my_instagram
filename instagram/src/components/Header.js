@@ -4,7 +4,7 @@ import UserContext from '../context/user';
 import { Link } from 'react-router-dom';
 import * as ROUTES from '../constants/Routes';
 import instagramLogo from '../images/logo.png';
-import profilePic from '../images/avatar/Orca.png';
+// import profilePic from '../images/avatar/Orca.png';
 
 function Header() {
   const { firebase } = useContext(FirebaseContext);
@@ -76,7 +76,7 @@ function Header() {
                   <Link to={`/p/${user?.displayName}`}>
                     <img
                       className='rounded-full h-8 w-8 flex'
-                      src={profilePic}
+                      src={`../images/avatar/${user?.username}.jpg `}
                       alt={`${user?.displayName} profile`}
                     />
                   </Link>

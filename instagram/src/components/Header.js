@@ -4,11 +4,13 @@ import UserContext from '../context/user';
 import { Link } from 'react-router-dom';
 import * as ROUTES from '../constants/Routes';
 import instagramLogo from '../images/logo.png';
-import profilePic from '../images/avatar/Orca Snorkel.png';
+import profilePic from '../images/avatar/Orca.png';
 
 function Header() {
   const { firebase } = useContext(FirebaseContext);
   const { user } = useContext(UserContext);
+
+  // console.log('usercontext', user?.displayName);
 
   return (
     <header className='h-16 bg-white border-b border-gray-primary mb-8'>
@@ -71,11 +73,11 @@ function Header() {
                   </svg>
                 </button>
                 <div className='flex items-center cursor-pointer'>
-                  <Link to={`/p/${user.displayName}`}>
+                  <Link to={`/p/${user?.displayName}`}>
                     <img
                       className='rounded-full h-8 w-8 flex'
                       src={profilePic}
-                      alt={`${user.displayName} profile`}
+                      alt={`${user?.displayName} profile`}
                     />
                   </Link>
                 </div>

@@ -58,8 +58,49 @@ export async function updateLoggedInUserFollowing(
     });
 }
 
-export async function updateFollowedUserFollowers() {
-  // const result = await firebase.firestore().collection('users').limit(10).get();
-
-  return;
+// spDocId, userId,
+export async function updateFollowedUserFollowers(
+  profileDocId, //currently logged in user doc id(karl's profile)
+  loggedInUserDocId, // the user that karl requests to follow
+  isFollowingProfile //true/false (am I currently followinf the person?)
+) {
+  return firebase
+    .firestore()
+    .collection('users')
+    .doc(profileDocId)
+    .update({
+      followers: isFollowingProfile
+        ? FieldValue.arrayRemove(loggedInUserDocId)
+        : FieldValue.arrayUnion(loggedInUserDocId),
+    });
 }
+
+export async function getPhotos(userId, following) {
+  const result = await firebase
+    .firestore()
+    .collection('photos')
+    .where('userId', 'in', following)
+    .get();
+
+  const userFollowedPhotos = result.doc.map((photo) => ({
+    ...photo.data(),
+    docId: photo.id,
+  }));
+
+  const photosWithUserDetails = await Promise.all(
+    userFollowedPhotos.map(async (photo) => {
+      let userLikedPhoto = false;
+      if (photo.likes.includes(userId)) {
+        userLikedPhoto = true;
+      }
+
+      const user = await getUserByUserId(photo.userId);
+
+      const { username } = user[0];
+      return { username, ...photo, userLikedPhoto };
+    })
+  );
+
+  return photosWithUserDetails;
+}
+//

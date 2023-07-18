@@ -5,7 +5,7 @@ import Suggestions from './Suggestions';
 
 function Sidebar() {
   const {
-    user: { fullName, username, userid, following },
+    user: { docId, fullName, username, userid, following },
   } = useUser();
 
   // console.log('following', following);
@@ -13,7 +13,11 @@ function Sidebar() {
   return (
     <div className='p-4'>
       <User username={username} fullName={fullName} />
-      <Suggestions userId={userid} following={following} />
+      <Suggestions
+        userId={userid}
+        following={following}
+        loggedInUserDocId={docId}
+      />
     </div>
   );
 }

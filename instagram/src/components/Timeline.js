@@ -1,5 +1,5 @@
 const Timeline = () => {
-  return <div>I am the Timeline</div>;
+  return <div className='container col-span-2'>I am the Timeline</div>;
 };
 
 export default Timeline;

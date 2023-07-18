@@ -19,7 +19,9 @@ function useUser() {
     }
   }, [user]);
 
-  return { user: activeUser, setActiveUser };
+  console.log('activeUser', activeUser);
+
+  return { user: activeUser };
 }
 
 export default useUser;

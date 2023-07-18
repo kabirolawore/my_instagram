@@ -8,7 +8,7 @@ function Sidebar() {
     user: { fullName, username, userid, following },
   } = useUser();
 
-  console.log('following', following);
+  // console.log('following', following);
 
   return (
     <div className='p-4'>

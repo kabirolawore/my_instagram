@@ -1,3 +1,4 @@
+import { Profiler } from 'react';
 import { firebase, FieldValue } from '../lib/firebase';
 
 export const doesUsernameExist = async (username) => {
@@ -25,13 +26,16 @@ export async function getUserByUserId(userId) {
   }));
 
   // console.log('getUserByUserId User', user);
-
   return user;
 }
 
 export async function getSuggestedProfiles(userId, following) {
-  const result = await firebase.firestore().collection('user').limit(10).get();
+  const result = await firebase.firestore().collection('users').limit(10).get();
 
-  console.log('result', result);
-  return result;
+  return result.docs
+    .map((user) => ({ ...user.data(), docId: user.id }))
+    .filter(
+      (profile) =>
+        profile.userid !== userId && !following.includes(profile.userid)
+    );
 }

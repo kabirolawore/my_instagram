@@ -19,7 +19,7 @@ function useUser() {
     }
   }, [user]);
 
-  console.log('activeUser', activeUser);
+  // console.log('activeUser', activeUser);
 
   return { user: activeUser };
 }

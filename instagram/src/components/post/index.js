@@ -2,7 +2,9 @@ import { useRef } from 'react';
 import PropTypes from 'prop-types';
 import Header from './Header';
 import Image from './Image';
-import Actions from './actions';
+import Actions from './Actions';
+import Footer from './Footer';
+import Comments from './Comments';
 
 function Post({ content }) {
   const commentInput = useRef(null);
@@ -17,6 +19,13 @@ function Post({ content }) {
         totalLikes={content.likes.length}
         likedPhoto={content.userLikedPhoto}
         handleFocus={handleFocus}
+      />
+      <Footer caption={content.caption} username={content.username} />
+      <Comments
+        docId={content.docId}
+        comments={content.comments}
+        posted={content.dateCreated}
+        commentInput={commentInput}
       />
     </div>
   );

@@ -14,8 +14,18 @@ function AddComment({ docId, comments, setComments, commentInput }) {
   const handleSubmitComment = (event) => {
     event.preventDefault();
 
-    return null;
+    setComments([{ displayName, comment }, ...comments]);
+    setComment('');
+
+    return firebase
+      .firestore()
+      .collection('photos')
+      .doc(docId)
+      .update({
+        comments: FieldValue.arrayUnion({ displayName, comment }),
+      });
   };
+
   return (
     <div className='border-t border-gray-primary'>
       <form
@@ -30,21 +40,35 @@ function AddComment({ docId, comments, setComments, commentInput }) {
         <input
           aria-label='Add a comment'
           autoComplete='off'
-          className='text-sm text-gray-base w-full'
+          className='text-sm text-gray-base w-full mr-3 py-5 px-4'
           type='text'
           name='add-comment'
           placeholder='Add a comment'
           value={comment}
           onChange={({ target }) => setComment(target.value)}
+          ref={commentInput}
         />
+
+        <button
+          className={`text-sm font-bold text-blue-medium ${
+            !comment && 'opacity-25'
+          }`}
+          type='button'
+          disabled={comment.length < 1}
+          onClick={handleSubmitComment}
+        >
+          Post
+        </button>
       </form>
     </div>
   );
 }
 
+export default AddComment;
+
 AddComment.propTypes = {
   docId: PropTypes.string.isRequired,
-  comments: PropTypes.string.isRequired,
+  comments: PropTypes.array.isRequired,
   setComments: PropTypes.func.isRequired,
   commentInput: PropTypes.object.isRequired,
 };

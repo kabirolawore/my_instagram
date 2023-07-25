@@ -119,3 +119,5 @@ export async function getPhotos(userId, following) {
   return photosWithUserDetails;
 }
 //
+
+export async function getUserPhotosByUsername(username) {}

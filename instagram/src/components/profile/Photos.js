@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import Skeleton from 'react-loading-skeleton';
 
 function Photos({ photos }) {
-  return <div>Photos</div>;
+  return;
 }
 
 export default Photos;

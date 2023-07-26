@@ -13,10 +13,10 @@ function Profile() {
 
   useEffect(() => {
     async function checkUserExists() {
-      const user = await getUserByUsername(username);
-
-      if (user.length > 0) {
-        setUser(user[0]);
+      const [user] = await getUserByUsername(username);
+      // console.log(user);
+      if (user.userid) {
+        setUser(user);
         // setUserExists(true);
       } else {
         navigate(ROUTES.NOT_FOUND);
@@ -26,7 +26,7 @@ function Profile() {
     checkUserExists();
   }, [username, navigate]);
 
-  console.log('user tp', user);
+  // console.log('user tp', user);
 
   return user?.username ? (
     <div className='bg-gray-background'>

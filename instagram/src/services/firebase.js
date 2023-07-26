@@ -1,4 +1,3 @@
-import { Profiler } from 'react';
 import { firebase, FieldValue } from '../lib/firebase';
 
 export const doesUsernameExist = async (username) => {
@@ -127,7 +126,7 @@ export async function getPhotos(userId, following) {
 export async function getUserPhotosByUsername(username) {
   const [user] = await getUserByUsername(username);
 
-  console.log('user', user);
+  // console.log('user', user);
 
   const result = await firebase
     .firestore()
@@ -139,4 +138,26 @@ export async function getUserPhotosByUsername(username) {
     ...item.data(),
     docId: item.id,
   }));
+}
+
+export async function isUserFollowingProfile(
+  loggedInUserUsername,
+  profileUserId
+) {
+  const result = await firebase
+    .firestore()
+    .collection('users')
+    .where('username', '==', loggedInUserUsername)
+    .where('following', 'array-contains', profileUserId)
+    .get();
+
+  // console.log('result', result);
+
+  const [response = {}] = result.docs.map((item) => ({
+    ...item.data(),
+    docId: item.id,
+  }));
+
+  // console.log('response', response);
+  return response.userid;
 }
